@@ -1,0 +1,9 @@
+[res]
+include = 
+
+[target]
+path = go_algorithms_data_structures
+
+[deps]
+github.com/onsi/ginkgo/ginkgo = tag:v1.1.0
+github.com/onsi/gomega = tag:v1.0

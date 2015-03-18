@@ -1,7 +1,7 @@
 package list
 
 import (
-//"errors"
+	"errors"
 )
 
 type Node struct {
@@ -48,7 +48,100 @@ func (list *LinkedList) Prepend(value interface{}) {
 	list.length += 1
 }
 
+func (list *LinkedList) Append(value interface{}) {
+	node := newNode(value)
+	if list.length == 0 {
+		list.tail = node
+		list.head = list.tail
+	} else {
+		formerTail := list.tail
+		formerTail.next = node
+		node.prev = formerTail
+		list.tail = node
+	}
+	list.length += 1
+}
+
 func (list *LinkedList) RemoveFirst() interface{} {
+	if list.length == 0 {
+		return nil
+	}
+
+	firstNode := list.head
+	list.head = list.head.next
+
+	if list.head != nil {
+		list.head.prev = nil
+	}
 	list.length -= 1
-	return "One"
+	return firstNode.value
+}
+
+func (list *LinkedList) RemoveLast() interface{} {
+	if list.length == 0 {
+		return nil
+	}
+
+	lastNode := list.tail
+	list.tail = list.tail.prev
+	if list.tail != nil {
+		list.tail.next = nil
+	}
+	list.length -= 1
+	return lastNode.value
+}
+
+func (list *LinkedList) Clear() {
+	list.length = 0
+	list.head = nil
+	list.tail = nil
+}
+
+func (list *LinkedList) Get(index int) (interface{}, error) {
+	result, err := list.getNode(index)
+	if err != nil {
+		return nil, err
+	} else {
+		return result.value, nil
+	}
+}
+
+func (list *LinkedList) Insert(index int, value interface{}) error {
+	if index > list.length {
+		return errors.New("Index out of range")
+	}
+
+	node := newNode(value)
+	if list.length == 0 || index == 0 {
+		list.Prepend(value)
+		return nil
+	}
+
+	if list.length-1 == index {
+		list.Append(value)
+		return nil
+	}
+
+	nextNode, _ := list.getNode(index)
+	prevNode := nextNode.prev
+	prevNode.next = node
+	node.prev = prevNode
+	nextNode.prev = node
+	node.next = nextNode
+	list.length += 1
+	return nil
+}
+
+// TODO remove TBD
+
+func (list *LinkedList) getNode(index int) (*Node, error) {
+	if list.length < index || list.length == 0 {
+		return nil, errors.New("Index out of range")
+	}
+
+	node := list.head
+	for i := 0; i < index; i++ {
+		node = node.next
+	}
+	return node, nil
 }

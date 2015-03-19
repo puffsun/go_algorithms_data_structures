@@ -38,17 +38,18 @@ func (h *Heap) IsEmpty() bool {
 	return len(h.data) == 0
 }
 
-/**
- * @value should implement method Less
- *
- */
-func (h *Heap) Insert(value int) {
+func (h *Heap) InsertWithPriority(value, priority int) {
 	h.Lock()
 	defer h.Unlock()
 
 	node := NewNode(value, nil)
+	node.SetPriority(priority)
 	h.data = append(h.data, node)
 	h.siftUp()
+}
+
+func (h *Heap) Insert(value int) {
+	h.InsertWithPriority(value, -1)
 }
 
 func (h *Heap) Extract() (int, error) {

@@ -1,6 +1,7 @@
 package heap
 
 import (
+	"errors"
 	"sync"
 )
 
@@ -50,11 +51,22 @@ func (h *Heap) Insert(value int) {
 	h.siftUp()
 }
 
-func (h *Heap) Extract() int {
+func (h *Heap) Extract() (int, error) {
 	h.Lock()
 	defer h.Unlock()
-	// TODO
-	return 3
+	if h.Length() == 0 {
+		return -1, errors.New("Empty heap")
+	}
+
+	firstNode := h.data[0]
+	lastNode := h.data[h.Length()-1]
+	if h.Length() == 1 {
+		h.data = nil
+		return firstNode.value, nil
+	}
+	h.data = append([]*Node{lastNode}, h.data[1:h.Length()-1]...)
+	h.siftDown()
+	return firstNode.value, nil
 }
 
 func (h *Heap) Less(a, b *Node) bool {

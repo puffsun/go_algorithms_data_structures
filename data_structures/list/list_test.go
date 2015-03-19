@@ -97,13 +97,27 @@ var _ = Describe("List", func() {
 			})
 		})
 
-		Context("Adding data with valie index", func() {
+		Context("Adding data with valid index", func() {
 			It("should be added into list", func() {
 				list.Insert(0, "Two")
 				Expect(list.Length()).To(Equal(1))
 			})
 		})
-	})
 
-	// TODO Remove TOD
+		Context("Removing data from list", func() {
+			It("should remove the data from list", func() {
+				err := list.Remove("One")
+				Expect(err).NotTo(BeNil())
+				list.Append("One")
+				list.Append("Two")
+				Expect(list.Length()).To(Equal(2))
+				err = list.Remove("Two")
+				Expect(err).To(BeNil())
+				Expect(list.Length()).To(Equal(1))
+				err = list.Remove("Three")
+				Expect(err).NotTo(BeNil())
+				Expect(list.Length()).To(Equal(1))
+			})
+		})
+	})
 })

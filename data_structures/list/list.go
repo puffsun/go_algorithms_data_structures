@@ -132,7 +132,36 @@ func (list *LinkedList) Insert(index int, value interface{}) error {
 	return nil
 }
 
-// TODO remove TBD
+func (list *LinkedList) Remove(value interface{}) error {
+	if list.length == 0 {
+		return errors.New("Empty list")
+	}
+
+	if list.head.value == value {
+		list.RemoveFirst()
+		return nil
+	}
+
+	found := false
+	for node := list.head; node != nil; node = node.next {
+		if node.value == value {
+			if node.next != nil {
+				node.next.prev = node.prev
+			}
+
+			if node.prev != nil {
+				node.prev.next = node.next
+			}
+			list.length -= 1
+			found = true
+		}
+	}
+
+	if !found {
+		return errors.New("Node not found")
+	}
+	return nil
+}
 
 func (list *LinkedList) getNode(index int) (*Node, error) {
 	if list.length < index || list.length == 0 {

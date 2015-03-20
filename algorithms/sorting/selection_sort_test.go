@@ -7,7 +7,7 @@ import (
 	. "github.com/onsi/gomega"
 )
 
-var _ = Describe("BubbleSort", func() {
+var _ = Describe("SelectionSort", func() {
 	var (
 		slice       []int
 		sortedSlice []int
@@ -21,18 +21,18 @@ var _ = Describe("BubbleSort", func() {
 	})
 
 	Describe("Sorting on a empty slice", func() {
-		Context("Performing bubble sort", func() {
+		Context("Performing selection sort", func() {
 			It("should return silently", func() {
-				BubbleSort(emptySlice)
+				SelectionSort(emptySlice)
 				Expect(emptySlice).To(Equal([]int{}))
 			})
 		})
 	})
 
-	Describe("Sorting on a unordered slice", func() {
-		Context("Performing bubble sort", func() {
+	Describe("Sorting a unordered slice", func() {
+		Context("Performing selection sort", func() {
 			It("should sort the slice", func() {
-				BubbleSort(slice)
+				SelectionSort(slice)
 				Expect(slice).To(Equal(sortedSlice))
 			})
 		})

@@ -10,6 +10,7 @@ func InsertionSort(slice []int) {
 		j := i - 1
 		for j >= 0 && slice[j] > val {
 			slice[j+1] = slice[j]
+			j -= 1
 		}
 		slice[j+1] = val
 	}

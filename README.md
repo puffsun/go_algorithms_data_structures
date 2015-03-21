@@ -7,4 +7,9 @@ This repo use [Ginkgo](http://onsi.github.io/ginkgo/) and [Gomega](http://onsi.g
 * `go get github.com/onsi/ginkgo/ginkgo`
 * `go get github.com/onsi/gomega`
 
+To run all tests, go to the project root, run:
+`ginkgo -r`
+
+For more info on Ginkgo, please go to [the home page of Ginkgo](http://onsi.github.io/ginkgo/)
+
 Any issue, please send me a pull request, thanks.

@@ -12,4 +12,6 @@ To run all tests, go to the project root, run:
 
 For more info on Ginkgo, please go to [the home page of Ginkgo](http://onsi.github.io/ginkgo/).
 
+For more algorithms and data structures in Go, please visit [arnauddri/algorithms](https://github.com/arnauddri/algorithms).
+
 Any issue, please send me a pull request, thanks.

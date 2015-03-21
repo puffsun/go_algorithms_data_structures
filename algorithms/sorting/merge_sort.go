@@ -32,3 +32,39 @@ func MergeSort(slice []int) {
 		}
 	}
 }
+
+func MergeSort2(slice []int) {
+	aux := make([]int, len(slice))
+	sort(slice, aux, 0, len(slice)-1)
+}
+
+func sort(slice, aux []int, low, high int) {
+	if high <= low {
+		return
+	}
+	mid := low + (high-low)/2
+	sort(slice, aux, low, mid)
+	sort(slice, aux, mid+1, high)
+	merge(slice, aux, low, mid, high)
+}
+
+func merge(slice, aux []int, low, mid, high int) {
+	i, j := low, mid+1
+	copy(aux, slice)
+
+	for k := low; k <= high; k += 1 {
+		if i > mid {
+			slice[k] = aux[j]
+			j += 1
+		} else if j > high {
+			slice[k] = aux[i]
+			i += 1
+		} else if aux[j] < aux[i] {
+			slice[k] = aux[j]
+			j += 1
+		} else {
+			slice[k] = aux[i]
+			i += 1
+		}
+	}
+}

@@ -20,7 +20,7 @@ var _ = Describe("MergeSort", func() {
 		emptySlice = []int{}
 	})
 
-	Describe("Sorting on an empty slice", func() {
+	Describe("Sorting an empty slice", func() {
 		Context("Performing merge sort", func() {
 			It("should return silently", func() {
 				MergeSort(emptySlice)
@@ -33,6 +33,24 @@ var _ = Describe("MergeSort", func() {
 		Context("Performing merge sort", func() {
 			It("should sort the slice", func() {
 				MergeSort(slice)
+				Expect(slice).To(Equal(sortedSlice))
+			})
+		})
+	})
+
+	Describe("Sorting an empty alice with another merge sort function", func() {
+		Context("Performing merge sort", func() {
+			It("should return silently", func() {
+				MergeSort2(emptySlice)
+				Expect(emptySlice).To(Equal([]int{}))
+			})
+		})
+	})
+
+	Describe("Sorting a unordered slice", func() {
+		Context("Performing merge sort", func() {
+			It("should sort the given slice in place", func() {
+				MergeSort2(slice)
 				Expect(slice).To(Equal(sortedSlice))
 			})
 		})

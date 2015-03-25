@@ -84,4 +84,25 @@ func (m *Matrix) Diagonal() ([]float64, error) {
 	return d, nil
 }
 
-// Add, Subtract, Scale, Multiply
+func (m *Matrix) Scale(s float64) {
+	for i := 0; i < m.rows; i++ {
+		for j := 0; j < m.cols; j++ {
+			m.SetElement(i, j, s*m.GetElement(i, j))
+		}
+	}
+}
+
+func (m *Matrix) Add(om *Matrix) error {
+	if m.rows != om.rows || m.cols != om.cols {
+		return errors.New("Cannot add matrix with different size")
+	}
+
+	for i := 0; i < m.rows; i++ {
+		for j := 0; j < m.cols; j++ {
+			m.SetElement(i, j, m.GetElement(i, j)+om.GetElement(i, j))
+		}
+	}
+	return nil
+}
+
+// TODO subtract & multiply

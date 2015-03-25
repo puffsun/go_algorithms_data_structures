@@ -9,13 +9,15 @@ import (
 
 var _ = Describe("Matrix", func() {
 	var (
-		matrix       *Matrix
-		emptyMatrix  *Matrix
-		squareMatrix *Matrix
+		matrix             *Matrix
+		emptyMatrix        *Matrix
+		squareMatrix       *Matrix
+		doubleScaledMatrix *Matrix
 	)
 
 	BeforeEach(func() {
 		matrix = NewWithParams([]float64{1, 2, 3, 4, 5, 6, 7, 8}, 4, 2)
+		doubleScaledMatrix = NewWithParams([]float64{2, 4, 6, 8, 10, 12, 14, 16}, 4, 2)
 		emptyMatrix = New()
 		squareMatrix = NewWithParams([]float64{1, 2, 3, 4, 5, 6, 7, 8, 9}, 3, 3)
 	})
@@ -67,7 +69,7 @@ var _ = Describe("Matrix", func() {
 		})
 	})
 
-	Context("Text matrix diagonal", func() {
+	Context("Test matrix diagonal", func() {
 		It("should return copy of diagonal", func() {
 			d, err := squareMatrix.Diagonal()
 			Expect(d).To(Equal([]float64{1.0, 5.0, 9.0}))
@@ -76,6 +78,28 @@ var _ = Describe("Matrix", func() {
 			d, err = matrix.Diagonal()
 			Expect(d).To(BeNil())
 			Expect(err).NotTo(BeNil())
+		})
+	})
+
+	Context("Test matrix scale", func() {
+		It("should scale the matrix", func() {
+			matrix.Scale(2.0)
+			Expect(matrix.RowsCount()).To(Equal(doubleScaledMatrix.RowsCount()))
+			Expect(matrix.ColsCount()).To(Equal(doubleScaledMatrix.ColsCount()))
+			Expect(matrix.GetElements()).To(Equal(doubleScaledMatrix.GetElements()))
+		})
+	})
+
+	Context("Test adding two matrix", func() {
+		It("should report error on two matrix with different row or column size", func() {
+			err := matrix.Add(squareMatrix)
+			Expect(err).NotTo(BeNil())
+		})
+
+		It("should add the matrix with another matrix", func() {
+			err := matrix.Add(matrix)
+			Expect(err).To(BeNil())
+			Expect(matrix.GetElements()).To(Equal(doubleScaledMatrix.GetElements()))
 		})
 	})
 })

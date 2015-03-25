@@ -150,13 +150,13 @@ func (g *Graph) RemoveEdge(from, to VertexId) error {
 	i, _ := g.edges[from][to]
 	j, _ := g.edges[to][from]
 
-	if i == -1 || j == -1 {
+	if i <= 0 || j <= 0 {
 		return errors.New("Edge doesn't exist")
 	}
 
-	g.edges[from][to] = -1
+	g.edges[from][to] = 0
 	if !g.IsDirected() {
-		g.edges[to][from] = -1
+		g.edges[to][from] = 0
 	}
 	g.edgesCount -= 1
 

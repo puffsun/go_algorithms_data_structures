@@ -128,10 +128,10 @@ func Multiply(m *Matrix, om *Matrix) (*Matrix, error) {
 	result := NewWithParams(make([]float64, om.cols*m.rows), om.cols, m.rows)
 
 	for i := 0; i < m.rows; i++ {
-		for j := 0; j < m.cols; j++ {
+		for j := 0; j < om.cols; j++ {
 			sum := float64(0)
 			for k := 0; k < m.cols; k++ {
-				sum += m.GetElement(i, k) * om.GetElement(j, k)
+				sum += m.GetElement(i, k) * om.GetElement(k, j)
 			}
 			result.SetElement(i, j, sum)
 		}

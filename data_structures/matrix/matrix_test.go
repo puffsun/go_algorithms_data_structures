@@ -136,5 +136,17 @@ var _ = Describe("Matrix", func() {
 			Expect(result.RowsCount()).To(Equal(rm.RowsCount()))
 			Expect(result.ColsCount()).To(Equal(rm.ColsCount()))
 		})
+
+		It("should times the given matrix", func() {
+			m := NewWithParams([]float64{0, 3, 5, 5, 5, 2}, 3, 2)
+			om := NewWithParams([]float64{3, 4, 3, -2, 4, -2}, 2, 3)
+			rm := NewWithParams([]float64{-6, 12, -6, 5, 40, 5, 11, 28, 11}, 3, 3)
+
+			result, err := Multiply(m, om)
+			Expect(err).To(BeNil())
+			Expect(result.GetElements()).To(Equal(rm.GetElements()))
+			Expect(result.RowsCount()).To(Equal(rm.RowsCount()))
+			Expect(result.ColsCount()).To(Equal(rm.ColsCount()))
+		})
 	})
 })

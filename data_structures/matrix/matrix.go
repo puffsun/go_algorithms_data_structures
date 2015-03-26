@@ -105,4 +105,36 @@ func (m *Matrix) Add(om *Matrix) error {
 	return nil
 }
 
-// TODO subtract & multiply
+func (m *Matrix) Subtract(om *Matrix) error {
+	if m.rows != om.rows || m.cols != om.cols {
+		return errors.New("Cannot subtract matrix with different size")
+	}
+
+	for i := 0; i < m.rows; i++ {
+		for j := 0; j < m.cols; j++ {
+			m.SetElement(i, j, m.GetElement(i, j)-om.GetElement(i, j))
+		}
+	}
+	return nil
+}
+
+func Multiply(m *Matrix, om *Matrix) (*Matrix, error) {
+	if m.rows != om.cols || m.cols != om.rows {
+		return nil, errors.New("Cannot multiply the given matrix")
+	}
+
+	// Note the make function call below
+	// make take type and len parameters to make a new instance
+	result := NewWithParams(make([]float64, om.cols*m.rows), om.cols, m.rows)
+
+	for i := 0; i < m.rows; i++ {
+		for j := 0; j < m.cols; j++ {
+			sum := float64(0)
+			for k := 0; k < m.cols; k++ {
+				sum += m.GetElement(i, k) * om.GetElement(j, k)
+			}
+			result.SetElement(i, j, sum)
+		}
+	}
+	return result, nil
+}

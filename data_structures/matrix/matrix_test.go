@@ -102,4 +102,39 @@ var _ = Describe("Matrix", func() {
 			Expect(matrix.GetElements()).To(Equal(doubleScaledMatrix.GetElements()))
 		})
 	})
+
+	Context("Test subtract two matrix", func() {
+		It("should report error on two matrix with different size", func() {
+			err := matrix.Subtract(squareMatrix)
+			Expect(err).NotTo(BeNil())
+		})
+
+		It("should subtract the matrix with same size", func() {
+			err := doubleScaledMatrix.Subtract(matrix)
+			Expect(err).To(BeNil())
+			Expect(doubleScaledMatrix.RowsCount()).To(Equal(matrix.RowsCount()))
+			Expect(doubleScaledMatrix.ColsCount()).To(Equal(matrix.ColsCount()))
+			Expect(doubleScaledMatrix.GetElements()).To(Equal(matrix.GetElements()))
+		})
+	})
+
+	Context("Test multiply two matrix", func() {
+		It("should return error on wrong matrix size", func() {
+			result, err := Multiply(matrix, matrix)
+			Expect(err).NotTo(BeNil())
+			Expect(result).To(BeNil())
+		})
+
+		It("should times the given matrixes", func() {
+			m := NewWithParams([]float64{0, 3, 5, 5, 5, 2}, 2, 3)
+			om := NewWithParams([]float64{3, 4, 3, -2, 4, -2}, 3, 2)
+			rm := NewWithParams([]float64{29, -16, 38, 6}, 2, 2)
+
+			result, err := Multiply(m, om)
+			Expect(err).To(BeNil())
+			Expect(result.GetElements()).To(Equal(rm.GetElements()))
+			Expect(result.RowsCount()).To(Equal(rm.RowsCount()))
+			Expect(result.ColsCount()).To(Equal(rm.ColsCount()))
+		})
+	})
 })

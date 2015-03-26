@@ -119,5 +119,20 @@ var _ = Describe("List", func() {
 				Expect(list.Length()).To(Equal(1))
 			})
 		})
+
+		Context("Traversing with each method", func() {
+			It("should traverse elements in the list", func() {
+				list.Append("One")
+				list.Append("Two")
+				list.Append("Three")
+				str := ""
+
+				f := func(node *Node) {
+					str += node.String()
+				}
+				list.Each(f)
+				Expect(str).To(Equal("OneTwoThree"))
+			})
+		})
 	})
 })

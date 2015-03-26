@@ -2,12 +2,21 @@ package list
 
 import (
 	"errors"
+	"fmt"
 )
 
 type Node struct {
 	value interface{}
 	prev  *Node
 	next  *Node
+}
+
+func (n *Node) String() string {
+	return fmt.Sprintf("%s", n.value)
+}
+
+func (n *Node) Value() interface{} {
+	return n.value
 }
 
 type LinkedList struct {
@@ -173,4 +182,10 @@ func (list *LinkedList) getNode(index int) (*Node, error) {
 		node = node.next
 	}
 	return node, nil
+}
+
+func (list *LinkedList) Each(f func(node *Node)) {
+	for node := list.head; node != nil; node = node.next {
+		f(node)
+	}
 }
